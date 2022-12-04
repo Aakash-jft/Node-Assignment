@@ -1,4 +1,9 @@
 $(function () {
+  if(sessionStorage.getItem("usere")==null){
+    alert("please inter the Email")
+    window.open("./register.html","_self")
+ }
+ let token = sessionStorage.getItem("usere");
   let Name = $("#name");
   let Job = $("#job");
   let Salary = $("#salary");
@@ -114,32 +119,42 @@ $(function () {
   function apiCalls(method, data) {
     if (method == "get") {
       let request = $.ajax({
-        url: "http://localhost:8086/Employee",
+        url: "http://localhost:3000/Employee",
         method: "GET",
-        mode:"no-cors"
+        mode:"no-cors",
+        headers: {
+          Authorization: 'Bearer '+token
+      }
       });
 
       request.done(function (data) {
         console.log(data)
-        arr2 = JSON.parse(data);
-        console.log(arr2);
-        show(arr2);
+        // arr2 = JSON.parse(data);
+        console.log(data);
+        arr2=[...data]
+        show(data);
       });
 
       request.fail(function (jqXHR, textStatus) {
         alert("Request failed: " + textStatus);
       });
     } else if (method == "post") {
+      console.log(data)
       let request = $.ajax({
-        url: "http://localhost:8086/Employee",
+        url: "http://localhost:3000/Employee",
         method: "POST",
-        data: JSON.stringify(data),
+        data:JSON.stringify(data),
+        contentType: "application/json",
+        headers: {
+          Authorization: 'Bearer '+token
+      }
+        
       });
 
       request.done(function (data) {
       //   getshow();
         console.log(data);
-        data = JSON.parse(data)
+        // data = JSON.parse(data)
         let tabb = `<tr id="rw-${data.id}"> 
           <td>${data.name}</td>
             <td>${data.job}</td>
@@ -159,13 +174,13 @@ $(function () {
       });
     } else if (method == "put") {
       let request = $.ajax({
-        url: `http://localhost:8086/Employee/put?id=${id}`,
+        url: `http://localhost:3000/Employee/${id}`,
         type: "PUT",
         data: JSON.stringify(data),
-        contentType : "text/plain",
-        headers:{
-          
-        }
+        headers: {
+          Authorization: 'Bearer '+token
+      },
+        contentType: "application/json"
       });
 
       request.done(function (data) {
@@ -178,9 +193,12 @@ $(function () {
       });
     } else if (method == "dele") {
       let request = $.ajax({
-        url: `http://localhost:8086/Employee/del?id=${id}`,
+        url: `http://localhost:3000/Employee/${id}`,
         method: "DELETE",
-        contentType : "text/plain"
+        contentType : "text/plain",
+        headers: {
+          Authorization: 'Bearer '+token
+      }
       });
 
       request.done(function (data) {
@@ -328,13 +346,17 @@ $("#search").click(searchData);
     $("#btn").html("Edit");
     flag = false;
     id = this.id;
+    console.log(id);
     let request = $.ajax({
-      url: `http://localhost:8086/Employee?id=${id}`,
+      url: `http://localhost:3000/Employee/${id}`,
       method: "GET",
+      headers: {
+        Authorization: 'Bearer '+token
+    }
     });
 
     request.done(function (data) {
-      data=JSON.parse(data)
+      // data=JSON.parse(data)
       Name.val(data.name);
       Job.val(data.job);
       Salary.val(data.salary);
