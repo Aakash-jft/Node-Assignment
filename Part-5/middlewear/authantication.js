@@ -3,7 +3,7 @@ require("dotenv").config;
 
 function varifyToken(token){
     new Promise((resolve, reject) => {
-        jwt.verify(token,"aakash",(err,decoded)=>{
+        jwt.verify(token,process.env.KEY,(err,decoded)=>{
             if(err) return reject(err);
             
             return resolve(decoded);

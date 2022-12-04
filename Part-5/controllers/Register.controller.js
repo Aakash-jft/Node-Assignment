@@ -6,7 +6,7 @@ let register = (req,res)=>{
     try {
         let user = req.body.name;
         console.log(user)
-    const accesstoken=jwt.sign({ user }, "aakash");
+    const accesstoken=jwt.sign({ user }, process.env.KEY);
     res.send(accesstoken)
         
     } catch (error) {
