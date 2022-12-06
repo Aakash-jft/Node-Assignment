@@ -31,7 +31,7 @@ let addEmployee = function(req,res){
     try {
         
         console.log(req.body);
-        req.body.id=(Employee.length>0?Employee[Employee.length-1].id+1:0)
+        req.body.id=(Employee.length>0?Employee[Employee.length-1].id+2:0)
         Employee.push(req.body);
         return res.status(200).send(req.body);
 
@@ -55,7 +55,8 @@ let updateEmployee = function(req,res){
     try {
         let id = req.params.id;
         let index = Employee.findIndex(e=>Number(e.id)==Number(id));
-        req.body.id=(Employee.length>0?Employee[Employee.length-1].id+1:0)
+        // req.body.id=(Employee.length>0?Employee[Employee.length-1].id+2:0)
+        req.body.id=id;
         Employee[index]=req.body;
         console.log(req.body);
 

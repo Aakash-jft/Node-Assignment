@@ -81,6 +81,8 @@ function responceListner(req, res) {
         if(pathname == "/Employee/put"){
             req.on("data",(data)=>{
                 buffer = JSON.parse(data);
+                buffer.id = id;
+                console.log(buffer);
                 let finId = Employee.findIndex((a) => Number(a.id) == Number(id));
                 Employee[finId] = buffer;
             }).on("end",()=>{
@@ -107,6 +109,7 @@ function responceListner(req, res) {
             else if(pathname=="/Employee/put"){
                 req.on("data",(data)=>{
                     buffer = JSON.parse(data);
+                    buffer.id = id;
                     let finId = Employee.findIndex((a) => Number(a.id) == Number(id));
                     Employee[finId] = buffer;
                 }).on("end",()=>{
@@ -122,7 +125,7 @@ function responceListner(req, res) {
             console.log(req.method);
 
 
-    
+            
     
   
 }

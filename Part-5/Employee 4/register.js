@@ -7,7 +7,7 @@ $("#btn").on("click",(e)=>{
     }
 
     
-    alert("welcome")
+    alert("Welcome")
     
 
     let request = $.ajax({
@@ -20,7 +20,7 @@ $("#btn").on("click",(e)=>{
 
       request.done(function (data) {
         console.log(data);
-        sessionStorage.setItem("usere",data);
+        sessionStorage.setItem("user",data);
         window.open("./index.html","_self");
 
       });

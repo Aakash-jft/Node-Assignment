@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config;
 
 function varifyToken(token){
-    new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
         jwt.verify(token,process.env.KEY,(err,decoded)=>{
             if(err) return reject(err);
             
@@ -11,24 +11,24 @@ function varifyToken(token){
     })
 }
 
-
-const authenticate = (req,res,next)=>{
-    if (!req.headers.authorization)
-    return res
+const authenticate = async (req,res,next)=>{
+  
+    if (!req.headers.authorization){
+      return res
       .status(400)
       .send({ message: "Authorization token not found or incorrect" });
 
-      let token = req.headers.authorization.trim().split(" ")[1];
 
+    }
+   
+      let token = req.headers.authorization.trim().split(" ")[1];
+      console.log(token);
       let decoded 
 
       try {
-        decoded = varifyToken(token)
+        decoded = await varifyToken(token)
       } catch (error) {
-        console.log(err);
-    return res
-      .status(400)
-      .send({ message: "Authorization token not found or incorrect" });
+      return res.status(400).send({ message: "Authorization token not found or incorrect" });
       }
      
       

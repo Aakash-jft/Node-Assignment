@@ -1,7 +1,7 @@
 const express = require("express");
-const corse = require("cors");
+const cors = require("cors");
 const jwt = require("jsonwebtoken")
-const middleware = require("./middlewear/authantication");
+const middleware = require("./middleware/authentication");
 
 const app = express();
 
@@ -9,21 +9,10 @@ const {getEmployee,getEmployeeById,addEmployee, deleteEmployee, updateEmployee} 
 const  register  =require("./controllers/Register.controller")
 
 
-app.use(corse());
+app.use(cors());
 app.use(express.json());
 
-
-
 app.post("/register",register);
-
-
-app.get("/Employee",middleware,getEmployee);
-app.get("/Employee/:id",middleware,getEmployeeById);
-app.post("/Employee",middleware,addEmployee);
-app.put("/employee/:id",updateEmployee);
-app.delete("/Employee/:id",deleteEmployee);
-
-
 app.get("/",(req,res)=>{
     try {
         // console.log(app)
@@ -31,7 +20,18 @@ app.get("/",(req,res)=>{
     } catch (error) {
         console.log(error)
     }
-})
+});
+
+app.use(middleware);
+
+app.get("/Employee/:id",getEmployeeById);
+app.post("/Employee",addEmployee);
+app.get("/Employee",getEmployee);
+app.put("/employee/:id",updateEmployee);
+app.delete("/Employee/:id",deleteEmployee);
+
+
+
 
 
 module.exports = app;

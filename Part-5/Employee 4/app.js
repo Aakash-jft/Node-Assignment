@@ -1,9 +1,9 @@
 $(function () {
-  if(sessionStorage.getItem("usere")==null){
-    alert("please inter the Email")
+  if(sessionStorage.getItem("user")==null){
+    alert("Please Enter Your Email id")
     window.open("./register.html","_self")
  }
- let token = sessionStorage.getItem("usere");
+ 
   let Name = $("#name");
   let Job = $("#job");
   let Salary = $("#salary");
@@ -93,37 +93,38 @@ $(function () {
     });
   }
 
-  // employee.prototype.equalsTo=function (x,...y){
-  //   // let obj = JSON.stringify(this);
-  //   // let obj2 = JSON.stringify(x);
-  //   console.log(this,x);
-  //   for(let i in this){
-  //     if(this[i]==y[i] || i=="equalsTo"){
-  //       continue;
-  //     }
-  //     if(this[i]==x[i]){
-  //       continue;
-  //     }
-  //     else{
-  //       console.log(this[i],i)
-  //       return false
-  //     }
-  //   }
+  employee.prototype.equalsTo=function (x,...y){
+    // let obj = JSON.stringify(this);
+    // let obj2 = JSON.stringify(x);
+    console.log(this,x);
+    for(let i in this){
+      if(this[i]==y[i] || i=="equalsTo"){
+        continue;
+      }
+      if(this[i]==x[i]){
+        continue;
+      }
+      else{
+        console.log(this[i],i)
+        return false
+      }
+    }
 
-  //   return true;
+    return true;
 
-  // }
+  }
 
   
 
   function apiCalls(method, data) {
+    console.log(typeof(sessionStorage.getItem("user")))
     if (method == "get") {
       let request = $.ajax({
         url: "http://localhost:3000/Employee",
         method: "GET",
         mode:"no-cors",
         headers: {
-          Authorization: 'Bearer '+token
+          authorization: 'Bearer '+sessionStorage.getItem("user")
       }
       });
 
@@ -146,7 +147,7 @@ $(function () {
         data:JSON.stringify(data),
         contentType: "application/json",
         headers: {
-          Authorization: 'Bearer '+token
+          authorization: 'Bearer '+sessionStorage.getItem("user")
       }
         
       });
@@ -178,7 +179,7 @@ $(function () {
         type: "PUT",
         data: JSON.stringify(data),
         headers: {
-          Authorization: 'Bearer '+token
+          authorization: 'Bearer '+sessionStorage.getItem("user")
       },
         contentType: "application/json"
       });
@@ -197,7 +198,7 @@ $(function () {
         method: "DELETE",
         contentType : "text/plain",
         headers: {
-          Authorization: 'Bearer '+token
+          authorization: 'Bearer '+sessionStorage.getItem("user")
       }
       });
 
@@ -351,7 +352,7 @@ $("#search").click(searchData);
       url: `http://localhost:3000/Employee/${id}`,
       method: "GET",
       headers: {
-        Authorization: 'Bearer '+token
+        authorization: 'Bearer '+sessionStorage.getItem("user")
     }
     });
 
