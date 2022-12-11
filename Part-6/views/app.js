@@ -1,8 +1,8 @@
 $(function () {
-  if (sessionStorage.getItem("user") == null) {
-    alert("Please Enter Your Email id");
-    window.open("./register.html", "_self");
-  }
+  // if (sessionStorage.getItem("user") == null) {
+  //   alert("Please Enter Your Email id");
+  //   window.open("./register.html", "_self");
+  // }
 
   let Name = $("#name");
   let Job = $("#job");

@@ -12,13 +12,14 @@ function varifyToken(token) {
 }
 
 const authenticate = async (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res
-      .status(400)
-      .send({ message: "Authorization token not found or incorrect" });
+  console.log(req.cookies);
+
+  if (req.cookies.key==undefined) {
+    res.redirect('/login');
+    return;
   }
 
-  let token = req.headers.authorization.trim().split(" ")[1];
+  let token = req.cookies.key;
   console.log(token);
   let decoded;
 
