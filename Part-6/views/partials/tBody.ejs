@@ -1,0 +1,22 @@
+<tbody>
+
+    <% Employee.forEach(e => { %>
+     
+    
+    <tr id=<%= e.id %> > 
+      <td><%= e.name %></td>
+      <td><%= e.job %></td>
+      <td><%= e.salary %></td>
+      <td>
+        <form id ='delete' action='/Employee/delete/<%= e.id %>' method='POST'>
+            <button  action="/Employee/delete/<%= e.id %>"  method="post" type="submit" class="delete btn btn-danger" id =<%= e.id %> >delete</button>  
+
+       </form>
+        <form id ='edit' action='/Employee/<%= e.id %>' method=''>
+            <button  class = "edit btn btn-secondary" id =<%= e.id %> class="edit">edit</button>
+
+       </form>
+    </td>
+    </tr>
+    <% }) %>
+</tbody>
