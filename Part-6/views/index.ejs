@@ -41,55 +41,66 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <!-- <script src="./app.js"></script> -->
   <script>
+    let Name = $("#name");
+    let Job = $("#job");
+    let Salary = $("#salary");
+    let id = null;
     var test =JSON.parse('<%- JSON.stringify(Employee) %>'); // test is now a valid js object
-    console.log(test)
+    console.log(test);
+
+    function employee(name, job, salary) {
+    this.name = name;
+    this.job = job;
+    this.salary = Number(salary);
+  }
+    
     function show(arr) {
     $("#table").html(`
     <thead>
-          <tr>
-            <th>
-            Name
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Sort
-              </button>
-              <ul class="dropdown-menu " id="name">
-                <li><button class="dropdown-item acc" value="name" id="acc" type="button">ASC</button></li>
-                <li><button class="dropdown-item dcc" value="name" id="dcc" type="button">DESC</button></li>
-                
-              </ul>
-            </div>
-            </th>
-            <th>Job
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Sort
-                </button>
-                <ul class="dropdown-menu" id="job">
-                  <li><button class="dropdown-item acc" value="job" type="button" id="acc">ASC</button></li>
-                  <li><button class="dropdown-item dcc" value="job" type="button" id="dcc">DESC</button></li>
-                  
-                </ul>
-              </div>
-            </th>
-            <th>Salary
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Sort
-                </button>
-                <ul class="dropdown-menu" id="salary">
-                  <li><button class="dropdown-item acc" value="salary" type="button" id="acc">ASC</button></li>
-                  <li><button class="dropdown-item dcc" value="salary" type="button" id="dcc">DESC</button></li>
-                  
-                </ul>
-              </div>
-            </th>
-            <th>Action
-              
-               
-            </th>
-          </tr>
-          </thead>`);
+    <tr>
+      <th>
+      Name
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sort
+        </button>
+        <ul class="dropdown-menu" id="name">
+          <li><button class="dropdown-item acc" id="acc" type="button">ASC</button></li>
+          <li><button class="dropdown-item dcc" id="dcc" type="button">DESC</button></li>
+          
+        </ul>
+      </div>
+      </th>
+      <th>Job
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort
+          </button>
+          <ul class="dropdown-menu" id="job">
+            <li><button class="dropdown-item acc" type="button" id="acc">ASC</button></li>
+            <li><button class="dropdown-item dcc" type="button" id="dcc">DESC</button></li>
+            
+          </ul>
+        </div>
+      </th>
+      <th>Salary
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort
+          </button>
+          <ul class="dropdown-menu" id="salary">
+            <li><button class="dropdown-item acc" type="button" id="acc">ASC</button></li>
+            <li><button class="dropdown-item dcc" type="button" id="dcc">DESC</button></li>
+            
+          </ul>
+        </div>
+      </th>
+      <th>Action
+        
+         
+      </th>
+    </tr>
+    </thead>`);
     arr.forEach((e) => {
       let tabb = `
       <tbody>
@@ -98,8 +109,14 @@
         <td>${e.job}</td>
         <td>${e.salary}</td>
         <td>
-        <button  class="delete btn btn-danger" id ="${e.id}" >delete</button>
-        <button  class = "edit btn btn-secondary" id ="${e.id}" class="edit">edit</button>
+            <form id ='delete' action='/Employee/delete/${e.id}' method='POST'>
+            <button  action="/Employee/delete/${e.id}"  method="post" type="submit" class="delete btn btn-danger" d =${e.id} >delete</button>  
+
+       </form>
+        <form id ='edit' action='/Employee/${e.id}' method=''>
+            <button  class = "edit btn btn-secondary" id =${e.id} class="edit">edit</button>
+
+       </form>
       </td>
       </tbody>
     </tr>`;
@@ -146,7 +163,35 @@
     show(arr)
 
   }
+    function searchData() {
+    let obj = new employee(Name.val(), Job.val(), Number(Salary.val()));
+    console.log(obj);
 
+    let arr = test.filter((e) => {
+      if (obj.equalsTo(e, { id })) {
+        return e;
+      }
+    });
+
+    if (!arr.length) {
+      alert("Not found");
+      clear();
+      return;
+    }
+
+    if ($("#search").html() == "Search") {
+      $("#search").html("Reset");
+      show(arr);
+    } else {
+      $("#search").html("Search");
+      clear();
+      show(test);
+    }
+  }
+
+  $("#search").click(()=>{
+    console.log("clicked")
+  });
     $("#table").on("click", ".acc", async function () {
     // sortByname(arr2,"acc");
     // console.log("acc");
