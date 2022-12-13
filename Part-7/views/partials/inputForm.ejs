@@ -1,0 +1,29 @@
+<div class="inputs">
+    <form  action="/Employee/add" method="post" id="data">
+    <div>
+      <label for="name"> Name</label>
+      <input  class="form-control" name="name" type="text"  onkeypress=" return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))" id="name" value="<%= name %> "  required placeholder="Enter Name..."  />
+    </div>
+    <div>
+      <label for="job"> Job</label>
+      <input class="form-control" name="job" type="text" required onkeypress=" return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))" id="job" value="<%= job %> " placeholder="Enter Job Position..." type="text" />
+    </div>
+    <div>
+      <label for="salary"> Salary</label>
+      <input class="form-control" name="salary" id="salary" value="<%= salary %>" required placeholder="Enter Salary..." type="number" />
+    </div>
+
+    <div>
+      <% if (flag) { %>
+        <button type="submit"  class="btn btn-primary add-btn" id="btn">Add</button>
+        
+        <% } else { %>
+          <button type="submit" form="data" formaction="/Employee/<%=id%>" formmethod="POST" class="btn btn-primary add-btn" id="btn">edit</button>
+        <% } %>
+       
+      
+      <button type="button" class="btn btn-primary add-btn" id="search">Search</button>
+    </div>
+</form>
+
+    </div>

@@ -4,9 +4,9 @@
      
     
     <tr id=<%= e.id %> > 
-      <td><%= e.Name %></td>
-      <td><%= e.Job %></td>
-      <td><%= e.Salary %></td>
+      <td><%= e.name %></td>
+      <td><%= e.job %></td>
+      <td><%= e.salary %></td>
       <td>
         <form id ='delete' action='/Employee/delete/<%= e.id %>' method='POST'>
             <button  action="/Employee/delete/<%= e.id %>"  method="post" type="submit" class="delete btn btn-danger" id =<%= e.id %> >delete</button>  
